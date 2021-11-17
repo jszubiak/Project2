@@ -141,19 +141,14 @@ resource "aws_instance" "jms-instance" {
     network_interface_id = aws_network_interface.eth0.id
   }
 
+  user_data = <<-EOF
+                #!/bin/bash
+                sudo yum install -y httpd
+                sudo systemctl start httpd
+                sudo bash -c 'echo your very first web server > /var/www/html/index.html'
+                EOF
   tags = {
     Name = "prod"
   }
 }
-#   user_data = <<-EOF
-#                 #!/bin/bash
-#                 sudo apt update -y
-#                 sudo apt install apache2 -y
-#                 sudo systemctl start apache2
-#                 sudo bash -c 'echo your very first web server > /var/www/html/index.html'
-#                 EOF
-#   tags = {
-#     Name = "web-server"
-#   }
-# }
 
