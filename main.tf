@@ -131,24 +131,18 @@ resource "aws_eip" "out" {
 # }
 
 resource "aws_instance" "jms-instance" {
-  ami               = "ami-0ec23856b3bad62d3"
-  instance_type     = "t2.micro"
-  availability_zone = "eu-west-1a"
-  key_name          = "ssh-keyGFT"
+  ami               = var.ami
+  instance_type     = var.instance_type
+  availability_zone = var.availability_zone
+  key_name          = var.key
 
   network_interface {
     device_index         = 0
     network_interface_id = aws_network_interface.eth0.id
   }
 
-  user_data = <<-EOF
-                #!/bin/bash
-                sudo yum install -y httpd
-                sudo systemctl start httpd
-                sudo bash -c 'echo your very first web server > /var/www/html/index.html'
-                EOF
+  user_data = var.user_data
   tags = {
     Name = "prod"
   }
 }
-
