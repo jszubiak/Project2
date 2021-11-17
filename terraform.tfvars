@@ -5,5 +5,5 @@ ami               = "ami-0ec23856b3bad62d3"
 
 project_tags = {
   Name    = "prod"
-  version = 1
+  version = 3
 }
