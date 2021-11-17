@@ -16,9 +16,8 @@ provider "aws" {
 
 resource "aws_vpc" "jms-vpc" {
   cidr_block = "10.10.0.0/16"
-  tags = {
-    Name = "prod"
-  }
+
+  tags = var.project_tags
 }
 
 ///////////////////////////////////////////////////////////
@@ -28,18 +27,15 @@ resource "aws_subnet" "jms-subnet" {
   cidr_block        = "10.10.1.0/24"
   availability_zone = "eu-west-1a"
 
-  tags = {
-    Name = "prod"
-  }
+  tags = var.project_tags
 }
 
 ///////////////////////////////////////////////////////////
 
 resource "aws_internet_gateway" "jms-ig" {
   vpc_id = aws_vpc.jms-vpc.id
-  tags = {
-    "Name" = "prod"
-  }
+
+  tags = var.project_tags
 }
 
 ///////////////////////////////////////////////////////////
@@ -52,9 +48,7 @@ resource "aws_route_table" "jms-rt" {
     gateway_id = aws_internet_gateway.jms-ig.id
   }
 
-  tags = {
-    "Name" = "prod"
-  }
+  tags = var.project_tags
 }
 
 ///////////////////////////////////////////////////////////
@@ -102,18 +96,14 @@ resource "aws_security_group" "jsm-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "prod"
-  }
+  tags = var.project_tags
 }
 
 resource "aws_network_interface" "eth0" {
   subnet_id       = aws_subnet.jms-subnet.id
   private_ips     = ["10.10.1.200"]
   security_groups = [aws_security_group.jsm-sg.id]
-  tags = {
-    Name = "prod"
-  }
+  tags            = var.project_tags
 }
 
 resource "aws_eip" "out" {
@@ -121,9 +111,7 @@ resource "aws_eip" "out" {
   network_interface         = aws_network_interface.eth0.id
   associate_with_private_ip = "10.10.1.200"
   depends_on                = [aws_internet_gateway.jms-ig]
-  tags = {
-    Name = "prod"
-  }
+  tags                      = var.project_tags
 }
 
 # output "server_public_ip" {
@@ -142,7 +130,5 @@ resource "aws_instance" "jms-instance" {
   }
 
   user_data = var.user_data
-  tags = {
-    Name = "prod"
-  }
+  tags      = var.project_tags
 }

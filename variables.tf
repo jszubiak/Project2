@@ -1,30 +1,46 @@
 
 variable "ami" {
-  type = string
-  default = "ami-0ec23856b3bad62d3"  
+  type        = string
+  default     = "ami-0ec23856b3bad62d3"
+  description = "AMI with Amazon Linux, based on RHEL v8"
 }
 
 variable "instance_type" {
-  type = string
-  default = "t2.micro"  
+  type        = string
+  default     = "t2.micro"
+  description = "free tier machine"
 }
 
 variable "availability_zone" {
-  type = string
-  default = "eu-west-1a"  
+  type        = string
+  default     = "eu-west-1a"
+  description = "availability zone within EU-WEST-1 zone"
 }
 
 variable "key" {
-  type = string
-  default = "ssh-keyGFT"  
+  type        = string
+  default     = "ssh-keyGFT"
+  description = "ssh pu key to use"
 }
 
 variable "user_data" {
-    type = string
-    default = <<-EOF
+  type    = string
+  default = <<-EOF
     #!/bin/bash
     sudo yum install -y httpd
     sudo systemctl start httpd
     sudo bash -c "echo your very first web server > /var/www/html/index.html"
     EOF
+}
+
+variable "project_tags" {
+  type = object({
+    Name    = string
+    version = number
+  })
+  default = {
+    Name    = "prod"
+    version = 1
+  }
+  description = "tags used in this project"
 }
