@@ -1,4 +1,9 @@
 
+variable "region" {
+  type        = string
+  default     = "eu-west-1"
+  description = "region to which deploy infrastructure to"
+}
 variable "ami" {
   type        = string
   default     = "ami-0ec23856b3bad62d3"
@@ -43,4 +48,16 @@ variable "project_tags" {
     version = 1
   }
   description = "tags used in this project"
+}
+
+variable "lista_nazw" {
+  type        = list(string)
+  default     = ["abc", "xyz"]
+  description = "list nazw ..."
+}
+
+variable "lista_numerow" {
+  type        = list(number)
+  default     = [1, 2, 3]
+  description = "lista numwerów porządkowych ..."
 }
