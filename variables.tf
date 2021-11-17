@@ -1,4 +1,3 @@
-
 variable "region" {
   type        = string
   default     = "eu-west-1"
@@ -9,25 +8,21 @@ variable "ami" {
   default     = "ami-0ec23856b3bad62d3"
   description = "AMI with Amazon Linux, based on RHEL v8"
 }
-
 variable "instance_type" {
   type        = string
   default     = "t2.micro"
   description = "free tier machine"
 }
-
 variable "availability_zone" {
   type        = string
   default     = "eu-west-1a"
   description = "availability zone within EU-WEST-1 zone"
 }
-
 variable "key" {
   type        = string
   default     = "ssh-keyGFT"
   description = "ssh pu key to use"
 }
-
 variable "user_data" {
   type    = string
   default = <<-EOF
