@@ -114,10 +114,6 @@ resource "aws_eip" "out" {
   tags                      = var.project_tags
 }
 
-# output "server_public_ip" {
-#   value = aws_eip.one.public_ip
-# }
-
 resource "aws_instance" "jms-instance" {
   ami               = var.ami
   instance_type     = var.instance_type
